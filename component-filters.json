@@ -1,0 +1,39 @@
+[
+  {
+    "id": "main",
+    "components": ["section"]
+  },
+  {
+    "id": "section",
+    "components": [
+      "accordion",
+      "advanced-tabs",
+      "card",
+      "carousel",
+      "columns",
+      "embed",
+      "fragment",
+      "hero",
+      "modal",
+      "quote",
+      "search",
+      "section-metadata",
+      "table",
+      "tabs",
+      "video",
+      "youtube"
+    ]
+  },
+  {
+    "id": "accordion",
+    "components": []
+  },
+  {
+    "id": "carousel",
+    "components": []
+  },
+  {
+    "id": "tabs",
+    "components": []
+  }
+]

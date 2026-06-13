@@ -1,0 +1,172 @@
+{
+  "groups": [
+    {
+      "title": "Blocks",
+      "id": "blocks",
+      "components": [
+        {
+          "title": "Accordion",
+          "id": "accordion",
+          "plugins": {
+            "da": {
+              "name": "accordion",
+              "rows": 1,
+              "columns": 2
+            }
+          }
+        },
+        {
+          "title": "Advanced Tabs",
+          "id": "advanced-tabs",
+          "plugins": {
+            "da": {
+              "name": "advanced-tabs",
+              "rows": 1,
+              "columns": 1
+            }
+          }
+        },
+        {
+          "title": "Card",
+          "id": "card",
+          "plugins": {
+            "da": {
+              "name": "card",
+              "rows": 2,
+              "columns": 1
+            }
+          }
+        },
+        {
+          "title": "Carousel",
+          "id": "carousel",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"carousel\"><div><div><picture><source type=\"image/webp\" srcset=\"\"><source type=\"image/jpeg\" srcset=\"\"><img loading=\"lazy\"></picture></div><div></div></div></div>"
+            }
+          }
+        },
+        {
+          "title": "Columns",
+          "id": "columns",
+          "plugins": {
+            "da": {
+              "name": "columns",
+              "rows": 1,
+              "columns": 2
+            }
+          }
+        },
+        {
+          "title": "Embed",
+          "id": "embed",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"embed\"><div><div><p><a href=\"\">Video or social URL</a></p></div></div></div>"
+            }
+          }
+        },
+        {
+          "title": "Fragment",
+          "id": "fragment",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"fragment\"><div><div><p><a href=\"\">Fragment URL</a></p></div></div></div>"
+            }
+          }
+        },
+        {
+          "title": "Hero",
+          "id": "hero",
+          "plugins": {
+            "da": {
+              "name": "hero",
+              "rows": 2,
+              "columns": 1
+            }
+          }
+        },
+        {
+          "title": "Modal",
+          "id": "modal",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"modal\"><div><div><p><a href=\"\">Fragment URL</a></p></div></div></div>"
+            }
+          }
+        },
+        {
+          "title": "Quote",
+          "id": "quote",
+          "plugins": {
+            "da": {
+              "name": "quote",
+              "rows": 2,
+              "columns": 1
+            }
+          }
+        },
+        {
+          "title": "Search",
+          "id": "search",
+          "plugins": {
+            "da": {
+              "name": "search",
+              "rows": 1,
+              "columns": 1
+            }
+          }
+        },
+        {
+          "title": "Section Metadata",
+          "id": "section-metadata",
+          "plugins": {
+            "da": {
+              "name": "section-metadata",
+              "rows": 1,
+              "columns": 2
+            }
+          }
+        },
+        {
+          "title": "Table",
+          "id": "table",
+          "plugins": {
+            "da": {
+              "name": "table",
+              "rows": 2,
+              "columns": 2
+            }
+          }
+        },
+        {
+          "title": "Tabs",
+          "id": "tabs",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"tabs\"><div><div><p>Tab label</p></div><div></div></div></div>"
+            }
+          }
+        },
+        {
+          "title": "Video",
+          "id": "video",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"video\"><div><div><p><a href=\"\">Video URL</a></p></div></div></div>"
+            }
+          }
+        },
+        {
+          "title": "YouTube",
+          "id": "youtube",
+          "plugins": {
+            "da": {
+              "unsafeHTML": "<div class=\"youtube\"><div><div><p><a href=\"https://www.youtube.com/watch?v=\">YouTube URL</a></p></div></div></div>"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

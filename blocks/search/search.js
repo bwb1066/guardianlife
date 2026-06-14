@@ -124,7 +124,10 @@ function filterData(searchTerms, data) {
       if (idx < 0) return;
       if (minIdx < idx) minIdx = idx;
     });
-    if (minIdx >= 0) { foundInHeader.push({ minIdx, result }); return; }
+    if (minIdx >= 0) {
+      foundInHeader.push({ minIdx, result });
+      return;
+    }
     const metaContents = `${result.title} ${result.description} ${result.path.split('/').pop()}`.toLowerCase();
     searchTerms.forEach((term) => {
       const idx = metaContents.indexOf(term);
@@ -145,7 +148,9 @@ async function renderResults(block, config, filteredData, searchTerms) {
   const headingTag = searchResults.dataset.h;
   if (filteredData.length) {
     searchResults.classList.remove('no-results');
-    filteredData.forEach((result) => searchResults.append(renderResult(result, searchTerms, headingTag)));
+    filteredData.forEach((result) => searchResults.append(
+      renderResult(result, searchTerms, headingTag),
+    ));
   } else {
     searchResults.classList.add('no-results');
     const noResultsMessage = document.createElement('li');
@@ -162,7 +167,10 @@ async function handleSearch(e, block, config) {
     url.search = searchParams.toString();
     window.history.replaceState({}, '', url.toString());
   }
-  if (searchValue.length < 3) { clearSearch(block); return; }
+  if (searchValue.length < 3) {
+    clearSearch(block);
+    return;
+  }
   const searchTerms = searchValue.toLowerCase().split(/\s+/).filter((term) => !!term);
   const data = await fetchData(config.source);
   const filteredData = filterData(searchTerms, data);

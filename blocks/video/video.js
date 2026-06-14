@@ -95,7 +95,10 @@ export default async function decorate(block) {
     wrapper.append(placeholder);
     if (!autoplay) {
       wrapper.insertAdjacentHTML('beforeend', '<div class="video-placeholder-play"><button type="button" title="Play"></button></div>');
-      wrapper.addEventListener('click', () => { wrapper.remove(); loadVideoEmbed(block, link, true, false); });
+      wrapper.addEventListener('click', () => {
+        wrapper.remove();
+        loadVideoEmbed(block, link, true, false);
+      });
     }
     block.append(wrapper);
   }

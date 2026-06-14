@@ -329,7 +329,6 @@ header {
 
       .main-nav-item {
         border-bottom: initial;
-        position: relative;
 
         > * {
           max-width: initial;
@@ -338,8 +337,8 @@ header {
 
         &:hover,
         &.is-open {
-          > .menu,
-          > .mega-menu {
+          .menu,
+          .mega-menu {
             display: block;
           }
 

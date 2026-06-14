@@ -225,6 +225,7 @@ header {
       display: block;
       line-height: 64px;
       font-weight: 700;
+      cursor: pointer;
     }
 
     .menu,
@@ -276,6 +277,7 @@ header {
       background-color: var(--color-shaded);
       padding: var(--spacing-xl) 0;
       position: absolute;
+      top: var(--header-height);
       left: 0;
       right: 0;
 
@@ -327,13 +329,20 @@ header {
 
       .main-nav-item {
         border-bottom: initial;
+        position: relative;
 
         > * {
           max-width: initial;
           margin: initial;
         }
 
+        &:hover,
         &.is-open {
+          > .menu,
+          > .mega-menu {
+            display: block;
+          }
+
           .main-nav-link {
             border-bottom: initial;
           }

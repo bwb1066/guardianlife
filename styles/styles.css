@@ -122,15 +122,19 @@
   --color-yellow-800: #373100;
   --color-yellow-900: #1e1b00;
 
+  /* Guardian Life brand */
+  --color-guardian-navy: #0b2c41;
+  --color-guardian-orange: #e9582a;
+
   /* named colors */
   --color-light-base: 255 255 255;
   --color-dark-base: 0 0 0;
   --color-light: rgb(255 255 255);
   --color-dark: rgb(0 0 0);
-  --color-text: light-dark(var(--color-dark), var(--color-light));
-  --color-link: light-dark(var(--color-gray-900), var(--color-gray-100));
-  --color-brand: var(--color-purple-500);
-  --color-accent: light-dark(var(--color-magenta-600), var(--color-magenta-500));
+  --color-text: light-dark(var(--color-guardian-navy), var(--color-light));
+  --color-link: light-dark(var(--color-guardian-navy), var(--color-gray-100));
+  --color-brand: var(--color-guardian-navy);
+  --color-accent: var(--color-guardian-orange);
   --color-background: light-dark(var(--color-light), var(--color-dark));
   --color-shaded: light-dark(#f9f9f9, #111);
 

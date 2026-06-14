@@ -225,14 +225,14 @@
 }
 
 /* First hero on a page bleeds behind the fixed util-nav + header */
-.section:first-child:has(.hero) {
+.section.hero-bleed {
   margin-top: calc(-1 * (var(--header-height) + var(--util-nav-height, 0px)));
+}
 
-  .hero-foreground {
-    padding-top: calc(var(--spacing-xxl) + var(--header-height) + var(--util-nav-height, 0px));
-  }
+.section.hero-bleed .hero-foreground {
+  padding-top: calc(var(--spacing-xxl) + var(--header-height) + var(--util-nav-height, 0px));
+}
 
-  .hero.full {
-    --min-height: 100vh;
-  }
+.section.hero-bleed .hero.full {
+  --min-height: 100vh;
 }

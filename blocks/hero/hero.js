@@ -65,4 +65,9 @@ export default async function init(el) {
     bg.classList.add('hero-background');
     decorateBackground(bg);
   }
+
+  const section = el.closest('main > .section');
+  if (section && !section.previousElementSibling) {
+    section.classList.add('hero-bleed');
+  }
 }

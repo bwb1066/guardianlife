@@ -224,6 +224,55 @@
   }
 }
 
+/* Audience tabs — authored as the third row of the hero block table */
+.hero-tabs {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-l) 0;
+
+  > div {
+    max-width: var(--grid-container-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-l);
+  }
+
+  .tabs-label {
+    color: rgb(255 255 255 / 80%);
+    font-size: var(--body-font-size-s);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 var(--spacing-s);
+  }
+
+  ul {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  a {
+    display: block;
+    padding: var(--spacing-m) var(--spacing-l);
+    background: rgb(255 255 255 / 90%);
+    color: var(--color-guardian-navy);
+    font-weight: 600;
+    font-size: var(--body-font-size-m);
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+      background: var(--color-light);
+    }
+  }
+}
+
 /* First hero on a page bleeds behind the fixed util-nav + header */
 .section.hero-bleed {
   margin-top: calc(-1 * (var(--header-height) + var(--util-nav-height, 0px)));

@@ -55,27 +55,47 @@ function decorateForeground(fg) {
   }
 }
 
+function decorateTabs(tabsEl) {
+  tabsEl.classList.add('hero-tabs');
+  const label = tabsEl.querySelector('p:first-child');
+  if (label && !label.querySelector('a')) label.classList.add('tabs-label');
+}
+
 export default async function init(el) {
   const rows = [...el.querySelectorAll(':scope > div')];
+
+  // Detect audience tabs: last row has links but no image/video
+  let tabsRow = null;
+  if (rows.length >= 3) {
+    const last = rows[rows.length - 1];
+    if (last.querySelector('a') && !last.querySelector('picture, video')) {
+      tabsRow = rows.pop();
+    }
+  }
+
   const fg = rows.pop();
   fg.classList.add('hero-foreground');
   decorateForeground(fg);
+
   if (rows.length) {
     const bg = rows.pop();
     bg.classList.add('hero-background');
     decorateBackground(bg);
   }
 
-  const section = el.closest('main > .section');
-  if (section && !section.previousElementSibling) {
-    section.classList.add('hero-bleed');
+  if (tabsRow) decorateTabs(tabsRow);
+
+  const mainEl = el.closest('main');
+  const firstSection = mainEl?.firstElementChild;
+  if (firstSection?.contains(el)) {
+    firstSection.classList.add('hero-bleed');
     document.body.classList.add('has-hero-bleed');
 
     const headerEl = document.querySelector('header');
     if (headerEl) {
       headerEl.classList.add('over-hero');
       const toggleHeader = () => {
-        headerEl.classList.toggle('over-hero', section.getBoundingClientRect().bottom > 0);
+        headerEl.classList.toggle('over-hero', firstSection.getBoundingClientRect().bottom > 0);
       };
       window.addEventListener('scroll', toggleHeader, { passive: true });
     }

@@ -393,6 +393,16 @@ header {
       .action-wrapper button {
         color: #fff;
       }
+
+      .btn {
+        color: #fff;
+        border-color: #fff;
+        background: transparent;
+
+        &:hover {
+          background: rgb(255 255 255 / 15%);
+        }
+      }
     }
   }
 }

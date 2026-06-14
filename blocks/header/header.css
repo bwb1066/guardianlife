@@ -12,6 +12,7 @@ header {
   overflow: hidden;
   max-height: var(--header-height);
   background-color: light-dark(var(--color-light), var(--color-dark));
+  transition: background-color 0.3s;
 
   ul {
     margin: 0;
@@ -381,6 +382,16 @@ header {
 
       .header-content {
         height: initial;
+      }
+    }
+
+    &.over-hero {
+      background: transparent;
+
+      .brand-section a,
+      .main-nav-link,
+      .action-wrapper button {
+        color: #fff;
       }
     }
   }

@@ -69,5 +69,15 @@ export default async function init(el) {
   const section = el.closest('main > .section');
   if (section && !section.previousElementSibling) {
     section.classList.add('hero-bleed');
+    document.body.classList.add('has-hero-bleed');
+
+    const headerEl = document.querySelector('header');
+    if (headerEl) {
+      headerEl.classList.add('over-hero');
+      const toggleHeader = () => {
+        headerEl.classList.toggle('over-hero', section.getBoundingClientRect().bottom > 0);
+      };
+      window.addEventListener('scroll', toggleHeader, { passive: true });
+    }
   }
 }

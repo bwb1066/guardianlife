@@ -131,20 +131,31 @@ function decorateNavItem(li) {
   if (link) link.classList.add('main-nav-link');
   const menu = decorateMegaMenu(li) || decorateMenu(li);
   if (!(menu || link)) return;
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    toggleMenu(li);
-  });
+  if (link) {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleMenu(li);
+    });
+  } else {
+    const label = li.querySelector(':scope > p');
+    if (label) {
+      label.classList.add('main-nav-link');
+      label.addEventListener('click', () => toggleMenu(li));
+    }
+  }
 }
 
 function decorateBrandSection(section) {
   section.classList.add('brand-section');
   const brandLink = section.querySelector('a');
+  if (!brandLink) return;
   const [, text] = brandLink.childNodes;
-  const span = document.createElement('span');
-  span.className = 'brand-text';
-  span.append(text);
-  brandLink.append(span);
+  if (text) {
+    const span = document.createElement('span');
+    span.className = 'brand-text';
+    span.append(text);
+    brandLink.append(span);
+  }
 }
 
 function decorateNavSection(section) {

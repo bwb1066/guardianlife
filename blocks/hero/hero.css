@@ -115,6 +115,8 @@
       margin: 0;
       font-size: 92px;
       line-height: 101px;
+      hyphens: none;
+      overflow-wrap: normal;
     }
   }
 

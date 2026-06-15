@@ -173,6 +173,8 @@ function decorateMegaMenu(li) {
   if (!menu) return null;
   const wrapper = document.createElement('div');
   wrapper.className = 'mega-menu';
+  const cols = menu.querySelectorAll(':scope > .section').length || 1;
+  wrapper.style.setProperty('--mega-columns', cols);
   wrapper.append(menu);
   li.append(wrapper);
   return wrapper;

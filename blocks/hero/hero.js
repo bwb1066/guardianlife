@@ -85,17 +85,20 @@ export default async function init(el) {
 
   if (tabsRow) decorateTabs(tabsRow);
 
-  const mainEl = el.closest('main');
-  const firstSection = mainEl?.firstElementChild;
-  if (firstSection?.contains(el)) {
-    firstSection.classList.add('hero-bleed');
-    document.body.classList.add('has-hero-bleed');
+  // Full-height and bleed: apply when hero is the page's first block
+  const mainEl = document.querySelector('main');
+  const sections = mainEl ? [...mainEl.children] : [];
+  const isFirst = sections.length > 0 && sections[0].contains(el);
+  if (isFirst) {
+    const section = sections[0];
+    section.classList.add('hero-bleed');
+    el.style.setProperty('--min-height', '100vh');
 
     const headerEl = document.querySelector('header');
     if (headerEl) {
       headerEl.classList.add('over-hero');
       const toggleHeader = () => {
-        headerEl.classList.toggle('over-hero', firstSection.getBoundingClientRect().bottom > 0);
+        headerEl.classList.toggle('over-hero', section.getBoundingClientRect().bottom > 0);
       };
       window.addEventListener('scroll', toggleHeader, { passive: true });
     }

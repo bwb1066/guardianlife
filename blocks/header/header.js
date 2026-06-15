@@ -79,6 +79,54 @@ function decorateScheme(btn) {
   });
 }
 
+function searchSVG() {
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>';
+}
+
+function decorateSearch(actionsSection) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'action-wrapper search';
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.setAttribute('aria-label', 'Open search');
+  btn.innerHTML = `<span class="icon">${searchSVG()}</span><span class="text">Search</span>`;
+  wrapper.append(btn);
+  const content = actionsSection.querySelector('.default-content');
+  if (content) content.prepend(wrapper);
+
+  const popup = document.createElement('div');
+  popup.className = 'search-popup';
+  popup.setAttribute('aria-hidden', 'true');
+  popup.innerHTML = `<div class="search-popup-inner">
+    <button class="search-popup-close" aria-label="Close search">&times;</button>
+    <p class="search-popup-title">Search Guardianlife.com</p>
+    <div class="search-popup-row">
+      <span class="search-popup-icon">${searchSVG()}</span>
+      <input type="search" placeholder="Search" aria-label="Search guardianlife.com">
+    </div>
+  </div>`;
+  document.body.append(popup);
+
+  const openPopup = () => {
+    popup.classList.add('is-open');
+    popup.setAttribute('aria-hidden', 'false');
+    popup.querySelector('input').focus();
+  };
+  const closePopup = () => {
+    popup.classList.remove('is-open');
+    popup.setAttribute('aria-hidden', 'true');
+  };
+
+  btn.addEventListener('click', () => {
+    popup.classList.contains('is-open') ? closePopup() : openPopup();
+  });
+  popup.querySelector('.search-popup-close').addEventListener('click', closePopup);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePopup(); });
+  document.addEventListener('click', (e) => {
+    if (popup.classList.contains('is-open') && !popup.contains(e.target) && !wrapper.contains(e.target)) closePopup();
+  });
+}
+
 function decorateNavToggle(btn) {
   btn.addEventListener('click', () => {
     const header = document.body.querySelector('header');
@@ -182,6 +230,7 @@ function decorateNavSection(section) {
 
 async function decorateActionSection(section) {
   section.classList.add('actions-section');
+  decorateSearch(section);
 }
 
 async function decorateHeader(fragment) {

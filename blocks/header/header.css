@@ -262,6 +262,88 @@ header {
   }
 }
 
+/* Search popup — injected into body by header.js */
+.search-popup {
+  display: none;
+  position: fixed;
+  top: calc(var(--util-nav-height, 0px) + var(--header-height) + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(860px, calc(100% - 48px));
+  background: var(--color-light);
+  border-radius: 16px;
+  padding: var(--spacing-xl);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 18%);
+  z-index: 1100;
+
+  &.is-open {
+    display: block;
+  }
+
+  .search-popup-inner {
+    position: relative;
+  }
+
+  .search-popup-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--color-guardian-navy);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .search-popup-title {
+    font-size: var(--body-font-size-xl);
+    font-weight: 700;
+    color: var(--color-guardian-navy);
+    margin: 0 0 var(--spacing-l);
+  }
+
+  .search-popup-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-m);
+  }
+
+  .search-popup-icon {
+    color: var(--color-guardian-navy);
+    flex-shrink: 0;
+
+    svg {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  input[type="search"] {
+    flex: 1;
+    padding: 14px 20px;
+    border: 2px solid var(--color-guardian-navy);
+    border-radius: 8px;
+    font-size: var(--body-font-size-m);
+    color: var(--color-guardian-navy);
+    background: var(--color-light);
+    outline: none;
+
+    &::placeholder {
+      color: var(--color-gray-400);
+    }
+
+    &:focus {
+      border-color: var(--color-guardian-orange);
+    }
+
+    &::-webkit-search-cancel-button {
+      display: none;
+    }
+  }
+}
+
 @media (width >= 900px) {
   header {
     overflow: initial;
@@ -269,30 +351,34 @@ header {
     .header-content {
       max-width: var(--grid-container-width);
       margin: 0 auto;
+      position: relative;
       grid-template: "brand nav actions" 1fr / auto 1fr auto;
       gap: var(--spacing-l);
     }
 
     .menu,
     .mega-menu {
-      background-color: var(--color-shaded);
-      padding: var(--spacing-xl) 0;
+      background-color: var(--color-light);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgb(0 0 0 / 12%);
+      padding: var(--spacing-xl);
       position: absolute;
-      top: var(--header-height);
+      top: calc(var(--header-height) + 8px);
       left: 0;
       right: 0;
+      z-index: 1001;
 
       &.language {
         display: none;
         max-width: initial;
         margin: 0;
         width: 180px;
-        background-color: var(--color-shaded);
+        background-color: var(--color-light);
+        border-radius: 8px;
         padding: var(--spacing-xl);
         position: absolute;
         left: auto;
         right: 0;
-        z-index: 1001;
       }
     }
 
@@ -300,11 +386,46 @@ header {
       > .fragment-content {
         display: grid;
         grid-template-columns: repeat(var(--mega-columns), 1fr);
-        max-width: var(--grid-container-width);
-        margin: 0 auto;
+        gap: var(--spacing-xl);
 
         .section {
           margin-block: initial;
+        }
+      }
+
+      .default-content {
+        > :first-child:not(ul) {
+          color: var(--color-guardian-orange);
+          font-size: var(--body-font-size-s);
+          font-family: var(--font-family);
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          margin: 0 0 var(--spacing-s);
+          padding-bottom: var(--spacing-s);
+          border-bottom: 1px solid var(--color-gray-200);
+        }
+
+        li {
+          margin: 0;
+          border-bottom: 1px solid var(--color-gray-200);
+
+          &:last-child {
+            border-bottom: none;
+          }
+        }
+
+        a {
+          display: block;
+          padding: var(--spacing-m) 0;
+          font-weight: 700;
+          font-size: var(--body-font-size-l);
+          color: var(--color-guardian-navy);
+          text-decoration: none;
+
+          &:hover {
+            color: var(--color-guardian-orange);
+          }
         }
       }
     }

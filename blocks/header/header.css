@@ -428,6 +428,19 @@ header {
         .section {
           margin-block: initial;
         }
+
+        .section.double-col {
+          grid-column: span 2;
+
+          ul {
+            column-count: 2;
+            column-gap: var(--spacing-xl);
+
+            li {
+              break-inside: avoid;
+            }
+          }
+        }
       }
     }
 

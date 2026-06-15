@@ -173,7 +173,16 @@ function decorateMegaMenu(li) {
   if (!menu) return null;
   const wrapper = document.createElement('div');
   wrapper.className = 'mega-menu';
-  const cols = menu.querySelectorAll(':scope > .section').length || 1;
+  const sections = [...menu.querySelectorAll(':scope > .section')];
+  let cols = sections.length || 1;
+
+  // First section with > 8 links gets 2 CSS columns and spans 2 grid tracks
+  const first = sections[0];
+  if (first && first.querySelectorAll('li').length > 8) {
+    first.classList.add('double-col');
+    cols += 1;
+  }
+
   wrapper.style.setProperty('--mega-columns', cols);
   wrapper.append(menu);
   li.append(wrapper);

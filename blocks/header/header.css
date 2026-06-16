@@ -416,14 +416,19 @@ header {
     font-size: var(--body-font-size-m);
     color: var(--color-guardian-navy);
     background: var(--color-light);
-    outline: none;
 
     &::placeholder {
       color: var(--color-gray-400);
     }
 
     &:focus {
+      outline: none;
       border-color: var(--color-guardian-orange);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-guardian-orange);
+      outline-offset: 2px;
     }
 
     &::-webkit-search-cancel-button {
@@ -488,10 +493,10 @@ header {
             color: var(--color-guardian-navy);
             background: #fff;
             color-scheme: light;
-            outline: none;
 
             &::placeholder { color: var(--color-gray-400); }
-            &:focus { border-color: var(--color-guardian-orange); }
+            &:focus { outline: none; border-color: var(--color-guardian-orange); }
+            &:focus-visible { outline: 2px solid var(--color-guardian-orange); outline-offset: 2px; }
             &::-webkit-search-cancel-button { display: none; }
           }
         }

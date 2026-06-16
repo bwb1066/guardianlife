@@ -96,13 +96,16 @@ function decorateSearch(actionsSection) {
 
   const popup = document.createElement('div');
   popup.className = 'search-popup';
+  popup.setAttribute('role', 'dialog');
+  popup.setAttribute('aria-modal', 'true');
+  popup.setAttribute('aria-label', 'Search');
   popup.setAttribute('aria-hidden', 'true');
   popup.innerHTML = `<div class="search-popup-inner">
     <button class="search-popup-close" aria-label="Close search">&times;</button>
-    <p class="search-popup-title">Search Guardianlife.com</p>
+    <p class="search-popup-title" id="search-popup-title">Search Guardianlife.com</p>
     <div class="search-popup-row">
       <span class="search-popup-icon">${searchSVG()}</span>
-      <input type="search" placeholder="Search" aria-label="Search guardianlife.com">
+      <input type="search" placeholder="Search" aria-label="Search Guardianlife.com" aria-labelledby="search-popup-title">
     </div>
   </div>`;
   document.body.append(popup);
@@ -254,7 +257,12 @@ function decorateNavItem(li) {
     const label = li.querySelector(':scope > p');
     if (label) {
       label.classList.add('main-nav-link');
+      label.setAttribute('role', 'button');
+      label.tabIndex = 0;
       label.addEventListener('click', () => toggleMenu(li));
+      label.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMenu(li); }
+      });
     }
   }
 }
@@ -393,6 +401,15 @@ async function decorateHeader(fragment) {
  * @param {Element} el The header element
  */
 export default async function init(el) {
+  // Skip-to-content link — must be first focusable element on page
+  const skip = document.createElement('a');
+  skip.href = '#main-content';
+  skip.className = 'skip-to-content';
+  skip.textContent = 'Skip to main content';
+  el.before(skip);
+  const main = document.querySelector('main');
+  if (main && !main.id) main.id = 'main-content';
+
   const headerMeta = getMetadata('header');
   const path = headerMeta || HEADER_PATH;
   try {

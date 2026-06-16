@@ -28,14 +28,34 @@ export default async function decorate(block) {
     button.setAttribute('aria-selected', !i);
     button.setAttribute('role', 'tab');
     button.setAttribute('type', 'button');
+    button.setAttribute('tabindex', i === 0 ? '0' : '-1');
     button.addEventListener('click', () => {
       block.querySelectorAll('[role=tabpanel]').forEach((panel) => panel.setAttribute('aria-hidden', true));
-      tablist.querySelectorAll('button').forEach((btn) => btn.setAttribute('aria-selected', false));
+      tablist.querySelectorAll('button').forEach((btn) => {
+        btn.setAttribute('aria-selected', false);
+        btn.setAttribute('tabindex', '-1');
+      });
       tabpanel.setAttribute('aria-hidden', false);
       button.setAttribute('aria-selected', true);
+      button.setAttribute('tabindex', '0');
     });
     tablist.append(button);
     tab.remove();
+  });
+
+  tablist.addEventListener('keydown', (e) => {
+    const allTabs = [...tablist.querySelectorAll('[role="tab"]')];
+    const idx = allTabs.indexOf(document.activeElement);
+    if (idx === -1) return;
+    let next = -1;
+    if (e.key === 'ArrowRight') next = (idx + 1) % allTabs.length;
+    else if (e.key === 'ArrowLeft') next = (idx - 1 + allTabs.length) % allTabs.length;
+    else if (e.key === 'Home') next = 0;
+    else if (e.key === 'End') next = allTabs.length - 1;
+    if (next === -1) return;
+    e.preventDefault();
+    allTabs[next].focus();
+    allTabs[next].click();
   });
 
   block.prepend(tablist);

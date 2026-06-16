@@ -139,7 +139,7 @@ footer {
     p {
       margin: 0 0 var(--spacing-xs);
       font-size: var(--body-font-size-xs);
-      color: rgb(255 255 255 / 45%);
+      color: rgb(255 255 255 / 65%);
 
       &:last-child { margin: 0; }
     }

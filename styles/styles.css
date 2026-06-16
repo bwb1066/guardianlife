@@ -295,6 +295,30 @@ button {
   cursor: pointer;
 }
 
+:focus-visible {
+  outline: 3px solid var(--color-guardian-orange);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  top: var(--spacing-s);
+  padding: var(--spacing-s) var(--spacing-l);
+  background: var(--color-guardian-navy);
+  color: #fff;
+  z-index: 9999;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: var(--body-font-size-m);
+
+  &:focus-visible {
+    left: var(--spacing-m);
+  }
+}
+
 li {
   margin-block: 1em;
 }

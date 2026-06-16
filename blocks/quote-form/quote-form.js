@@ -119,11 +119,13 @@ export default function init(el) {
   form.className = 'qf-form';
   form.addEventListener('submit', (e) => e.preventDefault());
 
-  for (const field of fields) {
+  fields.forEach((field, i) => {
     const fieldEl = document.createElement('div');
     fieldEl.className = 'qf-field';
 
+    const fieldId = `qf-${i}-${field.label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
     const labelEl = document.createElement('label');
+    labelEl.setAttribute('for', fieldId);
     labelEl.textContent = field.label;
     fieldEl.append(labelEl);
 
@@ -131,6 +133,7 @@ export default function init(el) {
       const wrap = document.createElement('div');
       wrap.className = 'qf-select-wrap';
       const select = document.createElement('select');
+      select.id = fieldId;
       const defaultOpt = document.createElement('option');
       defaultOpt.value = '';
       defaultOpt.disabled = true;
@@ -154,19 +157,21 @@ export default function init(el) {
         prefix.textContent = field.prefix;
         const input = document.createElement('input');
         input.type = 'text';
+        input.id = fieldId;
         input.placeholder = field.placeholder;
         wrap.append(prefix, input);
         fieldEl.append(wrap);
       } else {
         const input = document.createElement('input');
         input.type = 'text';
+        input.id = fieldId;
         input.placeholder = field.placeholder;
         fieldEl.append(input);
       }
     }
 
     form.append(fieldEl);
-  }
+  });
 
   const submitBtn = document.createElement('button');
   submitBtn.type = 'submit';

@@ -272,6 +272,12 @@ function decorateBrandSection(section) {
   const brandLink = section.querySelector('a');
   if (!brandLink) return;
 
+  // Ensure the logo link has an accessible name — the brand-text span is visually
+  // hidden via width:0/height:0 which AT may not count, so aria-label is authoritative.
+  if (!brandLink.getAttribute('aria-label')) {
+    brandLink.setAttribute('aria-label', 'Guardian Life');
+  }
+
   // Light logo: picture already inside the link
   const lightPic = brandLink.querySelector('picture');
   if (lightPic) lightPic.classList.add('logo-light');

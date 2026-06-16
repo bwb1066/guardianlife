@@ -328,8 +328,51 @@ function decorateLogin(section) {
   if (content) content.append(link);
 }
 
+function decorateConcierge(section) {
+  const url = getMetadata('concierge-url');
+  const key = getMetadata('concierge-key');
+  const site = getMetadata('concierge-site');
+  if (!url || !key || !site) return;
+
+  const WIDGET_URL = 'https://bwb1066.github.io/brand-chat-config-ui/widget/brand-concierge.js';
+  const WIDGET_BASE = WIDGET_URL.replace(/[^/]+$/, '');
+  let chatModule = null;
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'concierge-btn';
+  btn.setAttribute('aria-label', 'Ask the AI Concierge');
+  btn.innerHTML = '<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"'
+    + ' width="22" height="22" fill="none" stroke="currentColor"'
+    + ' stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+    + '<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962'
+    + 'L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0'
+    + 'L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964'
+    + 'L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>'
+    + '<path d="M20 3v4"/><path d="M22 5h-4"/>'
+    + '<path d="M4 17v2"/><path d="M5 18H3"/></svg>';
+
+  btn.addEventListener('click', async () => {
+    if (!chatModule) {
+      chatModule = await import(WIDGET_URL);
+      chatModule.init({
+        supabaseUrl: url,
+        anonKey: key,
+        siteKey: site,
+        showTrigger: false,
+        widgetBase: WIDGET_BASE,
+      });
+    }
+    chatModule.default();
+  });
+
+  const content = section.querySelector('.default-content');
+  if (content) content.prepend(btn);
+}
+
 async function decorateActionSection(section) {
   section.classList.add('actions-section');
+  decorateConcierge(section);
   decorateSearch(section);
   decorateLogin(section);
 }

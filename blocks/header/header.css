@@ -270,7 +270,8 @@ header {
     .brand-section a,
     .main-nav-link,
     .action-wrapper button,
-    .hamburger-btn {
+    .hamburger-btn,
+    .concierge-btn {
       color: var(--color-guardian-navy);
     }
 
@@ -314,6 +315,20 @@ header {
 
 .login-btn {
   display: none;
+}
+
+.concierge-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  width: 44px;
+  height: var(--header-height);
+  cursor: pointer;
+  color: inherit;
+  flex-shrink: 0;
 }
 
 .hamburger-btn {
@@ -423,7 +438,8 @@ header {
     background: transparent;
 
     .hamburger-btn,
-    .action-wrapper button {
+    .action-wrapper button,
+    .concierge-btn {
       color: #fff;
     }
   }
@@ -880,7 +896,8 @@ body.is-scrolled header {
   .brand-section a,
   .main-nav-link,
   .action-wrapper button,
-  .hamburger-btn {
+  .hamburger-btn,
+  .concierge-btn {
     color: var(--color-guardian-navy);
   }
 

@@ -1,0 +1,185 @@
+.section:has(.learning-cards) {
+  background: var(--color-light);
+  padding: var(--spacing-xxl) var(--spacing-l);
+
+  /* Flex container: eyebrow spans full width, heading+button share a row */
+  .default-content {
+    max-width: var(--grid-container-width);
+    margin: 0 auto var(--spacing-xl);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--spacing-l);
+  }
+
+  /* First heading — always eyebrow regardless of level */
+  .default-content .lc-eyebrow {
+    width: 100%;
+    color: var(--color-guardian-orange);
+    font-size: var(--body-font-size-s);
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 0 0 var(--spacing-s);
+  }
+
+  /* Last heading — always main title, shares row with CTA button */
+  .default-content .lc-main-heading {
+    flex: 1;
+    color: var(--color-guardian-navy);
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 400;
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  /* CTA row injected by JS, sits right of the main heading */
+  .default-content .lc-cta-row {
+    flex-shrink: 0;
+  }
+}
+
+/* High specificity to beat any .default-content a base styles */
+.section:has(.learning-cards) .lc-visit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  background: var(--color-guardian-navy);
+  color: #fff;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: var(--body-font-size-s);
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover {
+    background: color-mix(in srgb, var(--color-guardian-navy) 85%, #000);
+    color: #fff;
+  }
+}
+
+.learning-cards {
+  max-width: var(--grid-container-width);
+  margin: 0 auto;
+
+  .lc-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-m);
+  }
+
+  /* Featured: left column, spans both mini rows */
+  .lc-featured {
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+
+    .lc-card-img {
+      aspect-ratio: 16 / 10;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: var(--spacing-m);
+
+      picture { display: block; width: 100%; height: 100%; }
+      img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    }
+
+    .lc-card-body { flex: 1; display: flex; flex-direction: column; }
+
+    .lc-card-title {
+      font-weight: 700;
+      font-size: var(--body-font-size-l);
+      color: var(--color-guardian-navy);
+      margin: 0 0 var(--spacing-s);
+      line-height: 1.3;
+    }
+
+    .lc-card-desc {
+      font-size: var(--body-font-size-s);
+      color: var(--color-dark);
+      line-height: 1.5;
+      margin: 0 0 var(--spacing-m);
+      flex: 1;
+    }
+  }
+
+  /* Mini cards: right column, stacked */
+  .lc-mini {
+    display: flex;
+    gap: var(--spacing-m);
+    align-items: flex-start;
+    padding-bottom: var(--spacing-l);
+
+    & + .lc-mini {
+      padding-top: var(--spacing-l);
+      padding-bottom: 0;
+      border-top: 1px solid var(--color-gray-200);
+    }
+
+    .lc-card-img {
+      flex-shrink: 0;
+      width: 152px;
+      height: 120px;
+      border-radius: 6px;
+      overflow: hidden;
+
+      picture { display: block; width: 100%; height: 100%; }
+      img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    }
+
+    .lc-card-body { flex: 1; display: flex; flex-direction: column; }
+
+    .lc-card-title {
+      font-weight: 700;
+      font-size: var(--body-font-size-m);
+      color: var(--color-guardian-navy);
+      margin: 0 0 var(--spacing-s);
+      line-height: 1.3;
+    }
+
+    .lc-card-desc {
+      font-size: var(--body-font-size-s);
+      color: var(--color-dark);
+      line-height: 1.5;
+      margin: 0 0 var(--spacing-m);
+      flex: 1;
+    }
+  }
+
+  .lc-card-cta {
+    margin: 0;
+
+    a {
+      color: var(--color-guardian-orange);
+      font-weight: 700;
+      font-size: var(--body-font-size-s);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+
+      span { font-weight: inherit; }
+
+      &:hover { opacity: 0.8; }
+    }
+  }
+}
+
+@media (width < 900px) {
+  .section:has(.learning-cards) .default-content .lc-cta-row {
+    width: 100%;
+    margin-top: var(--spacing-m);
+  }
+
+  .learning-cards .lc-cards {
+    grid-template-columns: 1fr;
+
+    .lc-featured { grid-row: auto; }
+  }
+}
+
+@media (width < 600px) {
+  .learning-cards .lc-mini {
+    flex-direction: column;
+
+    .lc-card-img { width: 100%; height: 200px; }
+  }
+}

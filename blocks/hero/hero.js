@@ -42,6 +42,10 @@ function decorateForeground(fg) {
       if (detail) {
         detail.classList.add('hero-detail');
       }
+      const afterHeading = heading.nextElementSibling;
+      if (afterHeading?.querySelector('picture, img')) {
+        afterHeading.classList.add('hero-brush');
+      }
     }
     // Determine foreground column types
     if (text) {
@@ -57,8 +61,25 @@ function decorateForeground(fg) {
 
 function decorateTabs(tabsEl) {
   tabsEl.classList.add('hero-tabs');
-  const label = tabsEl.querySelector('p:first-child');
+  const inner = tabsEl.querySelector(':scope > div') ?? tabsEl;
+  const label = inner.querySelector('p:first-child');
   if (label && !label.querySelector('a')) label.classList.add('tabs-label');
+
+  // Mobile toggle button (orange circle with up-arrow)
+  const toggleBtn = document.createElement('button');
+  toggleBtn.className = 'tabs-toggle-btn';
+  toggleBtn.setAttribute('aria-expanded', 'false');
+  toggleBtn.setAttribute('aria-label', 'Open audience selector');
+  toggleBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+  inner.append(toggleBtn);
+
+  toggleBtn.addEventListener('click', () => {
+    const isOpen = tabsEl.classList.toggle('is-open');
+    toggleBtn.setAttribute('aria-expanded', String(isOpen));
+    toggleBtn.setAttribute('aria-label', isOpen ? 'Close audience selector' : 'Open audience selector');
+  });
 }
 
 export default async function init(el) {

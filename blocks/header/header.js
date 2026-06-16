@@ -127,6 +127,35 @@ function decorateSearch(actionsSection) {
   });
 }
 
+function decorateMobilePanel(section) {
+  const panel = document.createElement('div');
+  panel.className = 'mobile-nav-panel';
+  panel.innerHTML = `
+    <div class="mnp-search">
+      <p class="mnp-search-title">Search Guardianlife.com</p>
+      <div class="mnp-search-row">
+        <span class="mnp-search-icon" aria-hidden="true">${searchSVG()}</span>
+        <input type="search" placeholder="Search" aria-label="Search Guardianlife.com">
+      </div>
+    </div>
+    <div class="mnp-quicklinks">
+      <p class="mnp-ql-title">What are you looking for?</p>
+      <ul>
+        <li><a href="/find-a-dentist">Find a dentist</a></li>
+        <li><a href="/find-a-vision-provider">Find a vision provider</a></li>
+        <li><a href="/find-a-financial-professional">Find a financial professional</a></li>
+        <li><a href="/forms-and-claims">Forms and claims</a></li>
+        <li><a href="/contact-us">Contact us</a></li>
+      </ul>
+    </div>
+    <div class="mnp-phone">
+      <p>Need help? Call us:</p>
+      <a href="tel:+18884827342">(888) 482-7342</a>
+    </div>
+  `;
+  section.append(panel);
+}
+
 function decorateNavToggle(btn) {
   btn.addEventListener('click', () => {
     const header = document.body.querySelector('header');
@@ -158,9 +187,16 @@ async function decorateAction(header, pattern) {
   if (pattern === '/tools/widgets/toggle') decorateNavToggle(btn);
 }
 
+function cleanEmptyParas(section) {
+  for (const p of [...section.querySelectorAll('.default-content > p')]) {
+    if (!p.textContent.trim()) p.remove();
+  }
+}
+
 function decorateMenu(li) {
   const section = li.querySelector(':scope > .section');
   if (!section) return null;
+  cleanEmptyParas(section);
   const wrapper = document.createElement('div');
   wrapper.className = 'menu';
   wrapper.append(section);
@@ -174,6 +210,20 @@ function decorateMegaMenu(li) {
   const wrapper = document.createElement('div');
   wrapper.className = 'mega-menu';
   const sections = [...menu.querySelectorAll(':scope > .section')];
+  for (const s of sections) {
+    cleanEmptyParas(s);
+    // Mobile: first paragraph in each section becomes a collapsible sub-category toggle
+    const label = s.querySelector('.default-content > p:first-child');
+    if (label) {
+      label.classList.add('sub-nav-label');
+      label.setAttribute('role', 'button');
+      label.tabIndex = 0;
+      label.addEventListener('click', () => s.classList.toggle('is-sub-open'));
+      label.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); s.classList.toggle('is-sub-open'); }
+      });
+    }
+  }
   let cols = sections.length || 1;
 
   // First section with > 8 links gets 2 CSS columns and spans 2 grid tracks
@@ -213,13 +263,41 @@ function decorateBrandSection(section) {
   section.classList.add('brand-section');
   const brandLink = section.querySelector('a');
   if (!brandLink) return;
-  const [, text] = brandLink.childNodes;
-  if (text) {
+
+  // Light logo: picture already inside the link
+  const lightPic = brandLink.querySelector('picture');
+  if (lightPic) lightPic.classList.add('logo-light');
+
+  // Wrap text node (brand name) before appending dark logo so childNodes stay stable
+  const [, textNode] = brandLink.childNodes;
+  if (textNode?.nodeType === Node.TEXT_NODE) {
     const span = document.createElement('span');
     span.className = 'brand-text';
-    span.append(text);
+    span.append(textNode);
     brandLink.append(span);
   }
+
+  // Dark logo: picture sibling outside the link (DA puts it after a <br>)
+  const para = brandLink.closest('p') || brandLink.parentElement;
+  if (para) {
+    const darkPic = [...para.querySelectorAll('picture')].find((p) => !brandLink.contains(p));
+    if (darkPic) {
+      darkPic.classList.add('logo-dark');
+      brandLink.append(darkPic);
+      para.querySelectorAll('br').forEach((br) => br.remove());
+    }
+  }
+
+  const hamburger = document.createElement('button');
+  hamburger.type = 'button';
+  hamburger.className = 'hamburger-btn';
+  hamburger.setAttribute('aria-label', 'Open navigation');
+  hamburger.innerHTML = '<svg viewBox="0 0 24 18" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="2" rx="1"/><rect y="8" width="24" height="2" rx="1"/><rect y="16" width="24" height="2" rx="1"/></svg>';
+  hamburger.addEventListener('click', () => {
+    const header = document.querySelector('header');
+    if (header) header.classList.toggle('is-mobile-open');
+  });
+  section.querySelector('.default-content')?.append(hamburger);
 }
 
 function decorateNavSection(section) {
@@ -237,11 +315,23 @@ function decorateNavSection(section) {
   for (const navItem of mainNavItems) {
     decorateNavItem(navItem);
   }
+
+  decorateMobilePanel(section);
+}
+
+function decorateLogin(section) {
+  const link = document.createElement('a');
+  link.href = '/login';
+  link.className = 'login-btn';
+  link.textContent = 'Log in';
+  const content = section.querySelector('.default-content');
+  if (content) content.append(link);
 }
 
 async function decorateActionSection(section) {
   section.classList.add('actions-section');
   decorateSearch(section);
+  decorateLogin(section);
 }
 
 async function decorateHeader(fragment) {
@@ -270,4 +360,10 @@ export default async function init(el) {
   } catch (e) {
     throw Error(e);
   }
+
+  const updateScrolled = () => {
+    document.body.classList.toggle('is-scrolled', window.scrollY > 10);
+  };
+  window.addEventListener('scroll', updateScrolled, { passive: true });
+  updateScrolled();
 }

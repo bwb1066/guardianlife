@@ -5,12 +5,24 @@ export default function init(block) {
   const headerCell = rows[0]?.querySelector(':scope > div') ?? rows[0];
   const bodyCell = rows[1]?.querySelector(':scope > div') ?? rows[1];
 
-  // Title row: first heading = "Disclaimer", first paragraph = reference number
+  // Title row: heading may contain <br> separating title from reference number
   const titleEl = headerCell?.querySelector('h1, h2, h3, h4, h5, h6');
-  const subtitleEl = headerCell?.querySelector('p');
+  let titleText = 'Disclaimer';
+  let subtitleText = null;
 
-  const titleText = titleEl?.textContent.trim() ?? 'Disclaimer';
-  const subtitleText = subtitleEl?.textContent.trim() ?? null;
+  if (titleEl) {
+    const brIdx = [...titleEl.childNodes].findIndex((n) => n.nodeName === 'BR');
+    if (brIdx > -1) {
+      const nodes = [...titleEl.childNodes];
+      titleText = nodes.slice(0, brIdx).map((n) => n.textContent).join('').trim() || 'Disclaimer';
+      subtitleText = nodes.slice(brIdx + 1).map((n) => n.textContent).join('').trim() || null;
+    } else {
+      titleText = titleEl.textContent.trim() || 'Disclaimer';
+      subtitleText = headerCell.querySelector('p')?.textContent.trim() ?? null;
+    }
+  } else {
+    subtitleText = headerCell?.querySelector('p')?.textContent.trim() ?? null;
+  }
 
   // Clone body paragraphs before wiping
   const bodyParas = bodyCell

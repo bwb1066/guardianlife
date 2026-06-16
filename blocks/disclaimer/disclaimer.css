@@ -16,7 +16,6 @@
     justify-content: space-between;
     gap: var(--spacing-m);
     padding: var(--spacing-m) var(--spacing-l);
-    background: #e5dfc9;
     cursor: pointer;
     user-select: none;
 

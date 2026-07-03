@@ -348,7 +348,7 @@ function decorateConcierge(section) {
   const site = getMetadata('concierge-site');
   if (!url || !key || !site) return;
 
-  const WIDGET_URL = 'https://bwb1066.github.io/brand-chat-config-ui/widget/brand-concierge.js';
+  const WIDGET_URL = 'https://bwb1066.github.io/brand-concierge/widget/brand-concierge.js';
   const WIDGET_BASE = WIDGET_URL.replace(/[^/]+$/, '');
   let chatModule = null;
 
